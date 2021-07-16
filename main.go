@@ -15,11 +15,11 @@ func main() {
 	app := &cli.App{
 		Name:        "Go-Notify",
 		HelpName:    "",
-		Usage:       "Inotify wrapper using tmux as intermediary",
+		Usage:       "The inotify wrapper using tmux as intermediary",
 		UsageText:   "",
 		ArgsUsage:   "",
 		Version:     "0.1.0",
-		Description: "Inotify wrapper using tmux as intermediary",
+		Description: "The inotify wrapper using tmux as intermediary",
 		Commands: []*cli.Command{
 			{
 				Name:      "attach",
