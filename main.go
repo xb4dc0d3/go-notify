@@ -9,16 +9,17 @@ import (
 )
 
 var app = cli.NewApp()
+var executable = "./go-notify"
 
 func main() {
 	app := &cli.App{
 		Name:        "Go-Notify",
 		HelpName:    "",
-		Usage:       "A fsnotify wrapper using tmux as intermediary",
+		Usage:       "Inotify wrapper using tmux as intermediary",
 		UsageText:   "",
 		ArgsUsage:   "",
 		Version:     "0.1.0",
-		Description: "A fsnotify wrapper using tmux as intermediary",
+		Description: "Inotify wrapper using tmux as intermediary",
 		Commands: []*cli.Command{
 			{
 				Name:      "attach",
@@ -30,8 +31,25 @@ func main() {
 						return cli.ShowCommandHelp(c, "attach")
 					}
 
-					notify_path := c.Args().First()
+					notify_path := c.Args().Get(0)
 					GoNotify(notify_path)
+					return nil
+				},
+			},
+			{
+				Name:      "attach-tmux",
+				Usage:     "Attach the folder or file you want to watch on tmux session",
+				UsageText: "go-notify attach-tmux <file_path>|<folder_path> <session_name>",
+				Action: func(c *cli.Context) error {
+
+					if c.NArg() < 0 || c.Args().Get(0) == "" {
+						return cli.ShowCommandHelp(c, "attach-tmux")
+					}
+
+					notify_path := c.Args().Get(0)
+					session_name := c.Args().Get(1)
+					tmux := Tmux{}
+					tmux.Attach(session_name, executable, notify_path)
 
 					return nil
 				},
